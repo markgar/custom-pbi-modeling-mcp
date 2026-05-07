@@ -1,0 +1,10 @@
+; Stdout is reserved for the MCP JSON-RPC transport. Any byte that escapes to
+; stdout corrupts it. Logging routes through ILogger (Serilog -> stderr + file).
+;
+; Banning the entire System.Console type catches every overload of Write /
+; WriteLine without having to enumerate them, plus Console.Out, Open*, etc.
+; If a future code path genuinely needs stderr (e.g. emergency diagnostics
+; before Serilog is up), suppress RS0030 with a #pragma + a comment
+; explaining why.
+
+T:System.Console;Stdout is the MCP JSON-RPC transport. Use ILogger (Serilog -> stderr + file). For emergency stderr diagnostics, suppress RS0030 with a justifying comment.

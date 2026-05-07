@@ -1,0 +1,53 @@
+# --- .NET ---
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.userprefs
+.vs/
+*.DotSettings.user
+project.lock.json
+artifacts/
+publish/
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# --- Tooling ---
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/mcp.json.sample
+.fake/
+
+# --- Secrets — never commit ---
+.env
+.env.local
+appsettings.Development.json
+appsettings.*.json
+!appsettings.json
+secrets.json
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# --- Server runtime artefacts ---
+# Anchored to repo root so we don't accidentally ignore the source/test
+# `Audit/` folders on case-insensitive filesystems.
+/.pbi-modeling-mcp/
+/audit/
+/backups/
+
+# --- azd environment state (per-deploy secrets, never commit) ---
+# `azd up` writes the resolved env vars (including HTTP_AUTH_TOKEN) under
+# .azure/<env-name>/.env. Treat the whole tree as gitignored.
+.azure/

@@ -1,0 +1,48 @@
+{
+  // Sample MCP server config for VS Code's built-in MCP client.
+  //
+  // Setup:
+  //   1. Copy this file to `.vscode/mcp.json` (gitignored — your edits stay local).
+  //   2. Pick the server(s) you want enabled and replace placeholders.
+  //
+  // Two PBI MCP server entries are pre-defined:
+  //
+  // - `pbi-modeling`        — local dev server. Run `dotnet run --project
+  //                           src/PbiModelingMcp` and it listens on
+  //                           127.0.0.1:5000 with auth disabled by default
+  //                           (see .env.sample).
+  //
+  // - `pbi-modeling-remote` — your Azure App Service deploy. After
+  //                           `azd up` finishes, replace `<your-app-name>`
+  //                           below with the host returned by
+  //                           `azd env get-value SERVICE_PBI_MODELING_ENDPOINT_URL`,
+  //                           then reload VS Code. The first request
+  //                           prompts for the API key (stored in the OS
+  //                           keychain after that). Get the key with
+  //                           `azd env get-value HTTP_AUTH_TOKEN`.
+  //
+  // Full deploy walkthrough: docs/deploy-azure.md
+  "inputs": [
+    {
+      "id": "pbi-mcp-remote-key",
+      "type": "promptString",
+      "password": true,
+      "description": "API key for the remote (Azure-deployed) PBI MCP server. Get it with: azd env get-value HTTP_AUTH_TOKEN"
+    }
+  ],
+  "servers": {
+    "pbi-modeling": {
+      "type": "http",
+      "url": "http://127.0.0.1:5000/"
+    },
+    "pbi-modeling-remote": {
+      "type": "http",
+      "url": "https://<your-app-name>.azurewebsites.net/",
+      "headers": { "X-Api-Key": "${input:pbi-mcp-remote-key}" }
+    },
+    "microsoft-learn": {
+      "type": "http",
+      "url": "https://learn.microsoft.com/api/mcp"
+    }
+  }
+}
